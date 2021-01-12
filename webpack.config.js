@@ -2,9 +2,6 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
-
-
 module.exports = {
   mode: 'development',
   entry: './src/index.ts',
@@ -15,7 +12,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Ayahuasca',
+      title: '::PROJECTO::',
       favicon: 'favicon.ico'
     }),
   ],
@@ -28,32 +25,33 @@ module.exports = {
     host: '0.0.0.0'
   },
   module: {
-    rules: [{
-      test: /\.(ts|tsx)$/,
-      loader: 'ts-loader',
-      include: [path.resolve(__dirname, 'src')],
-      exclude: [/node_modules/]
-    }, {
+    rules: [
+      {
+        test: /.(mjs|js|mts|ts|jsx|tsx)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env'
+              ]
+            }
+          },
+          {
+            loader: 'ts-loader'
+          }
+        ]
+      }, {
       test: /.(scss|css)$/,
-
-      use: [{
-        loader: "style-loader"
-      }, {
-        loader: "css-loader",
-
-        options: {
-          sourceMap: true
-        }
-      }, {
-        loader: "sass-loader",
-
-        options: {
-          sourceMap: true
-        }
-      }]
+      use: [
+        { loader: "style-loader" },
+        { loader: "css-loader" },
+        { loader: "postcss-loader" },
+        { loader: "sass-loader"}
+      ]
     }]
   },
-
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },

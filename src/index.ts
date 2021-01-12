@@ -1,11 +1,17 @@
-const dialogPolyfill = require('dialog-polyfill')
+import dialogPolyfill from 'dialog-polyfill';
+import './style.scss';
+
 const button = document.createElement('button');
-button.innerText = 'sayy hello!';
-button.onclick = function() {
+button.innerText = 'ayy lmao';
+button.addEventListener('click', function() {
   const dialog = document.createElement('dialog');
-  dialog.open = true;
-  dialog.innerHTML = 'A winrar is you!';
+  const closeButton = document.createElement('button');
+  closeButton.innerText = 'x';
   document.body.appendChild(dialog);
+  dialog.appendChild(closeButton);
+  dialog.innerHTML += 'A winrar is you!';
   dialogPolyfill.registerDialog(dialog);
-};
+  dialog.showModal();
+  closeButton.addEventListener('click', function(){ dialog.close(); console.log('uwu')});
+});
 document.body.appendChild(button);
